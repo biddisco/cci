@@ -1,0 +1,34 @@
+set(CCI_API_SRCS
+  accept.c
+  arm_os_handle.c
+  connect.c
+  create_endpoint.c
+  destroy_endpoint.c
+  disconnect.c
+  finalize.c
+  get_devices.c
+  get_event.c
+  get_opt.c
+  init.c
+  reject.c
+  return_event.c
+  rma.c
+  rma_deregister.c
+  rma_register.c
+  send.c
+  sendv.c
+  set_opt.c
+  strerror.c
+)
+
+add_library(cci_api 
+  ${CCI_API_SRCS}
+)
+target_link_libraries(cci_api
+  cci_util
+  cci_plugins_base
+  cci_util
+  cci_plugins_base
+  cci_plugins_framework_ctp
+  ${LTDL_LIBRARIES}
+)
