@@ -1,11 +1,11 @@
 add_executable(cci_info cci_info.c)
 
 target_link_libraries(cci_info 
-  cci
+  ${CCI_LIBS}
 )
 
 add_executable(pingpong pingpong.c)
 
 target_link_libraries(pingpong
-  cci
+  ${CCI_LIBS}
 )

@@ -13,11 +13,14 @@ set(CCI_PLUGINS_CTP_SRCS
   ${CMAKE_CURRENT_SOURCE_DIR}/ctp/base/verify.c
 )
 
-add_library(cci_plugins_base
+add_library(cci_plugins_base STATIC
   ${CCI_PLUGINS_BASE_SRCS}
 )
+target_link_libraries(cci_plugins_base
+  cci_util
+)
 
-add_library(cci_plugins_framework_ctp
+add_library(cci_plugins_framework_ctp STATIC
   ${CCI_PLUGINS_CTP_SRCS}
 )
 
@@ -73,4 +76,33 @@ if(CCI_BUILD_PLUGIN_SM)
   )
 
   add_ctp_plugin(cci_ctp_sm "${CCI_PLUGINS_SM_SRCS}")
+endif()
+
+#--------------------------------------------------
+# verbs plugin
+#--------------------------------------------------
+option(CCI_BUILD_PLUGIN_VERBS OFF "Build IBVerbs plugin")
+if(CCI_BUILD_PLUGIN_VERBS)
+    #------------------------------------------------------------------------------
+    # OFED verbs stack
+    #------------------------------------------------------------------------------
+    find_package(IB_VERBS REQUIRED)
+    include_directories(${IB_VERBS_INCLUDE_DIRS})
+    
+    #------------------------------------------------------------------------------
+    # RDMA_CM
+    #------------------------------------------------------------------------------
+    find_package(RDMA_CM REQUIRED)
+    include_directories(${RDMA_CM_INCLUDE_DIRS})
+  
+  set(CCI_PLUGINS_VERBS_SRCS
+    ${CMAKE_CURRENT_SOURCE_DIR}/ctp/verbs/ctp_verbs_module.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/ctp/verbs/ctp_verbs_api.c
+  )
+
+  add_ctp_plugin(cci_ctp_verbs "${CCI_PLUGINS_VERBS_SRCS}")
+  target_link_libraries(cci_ctp_verbs 
+    ${IB_VERBS_LIBRARIES}
+    ${RDMA_CM_LIBRARIES}
+  )
 endif()

@@ -21,14 +21,6 @@ set(CCI_API_SRCS
   strerror.c
 )
 
-add_library(cci_api 
+add_library(cci_api STATIC
   ${CCI_API_SRCS}
-)
-target_link_libraries(cci_api
-  cci_util
-  cci_plugins_base
-  cci_util
-  cci_plugins_base
-  cci_plugins_framework_ctp
-  ${LTDL_LIBRARIES}
 )
