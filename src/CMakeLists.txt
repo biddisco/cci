@@ -17,12 +17,17 @@ set_source_files_properties(${CMAKE_CURRENT_BINARY_DIR}/dummy.c PROPERTIES GENER
 #--------------------------------------------------
 add_library(cci SHARED ${CMAKE_CURRENT_BINARY_DIR}/dummy.c)
 target_link_libraries(cci
-  cci_api
-  cci_plugins_framework_ctp
-  cci_plugins_base
-  cci_util
-  ${LTDL_LIBRARIES}
+  ${CCI_LIBS}
 )
+SET_TARGET_PROPERTIES(cci PROPERTIES LINK_INTERFACE_LIBRARIES "")
+
+install(TARGETS cci
+  EXPORT CCITargets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  PUBLIC_HEADER DESTINATION include)
+
 
 #--------------------------------------------------
 # Testing

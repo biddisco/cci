@@ -1,0 +1,22 @@
+#-----------------------------------------------------------------------------
+# Include target definitions :
+# Skip them if cci is already defined - this can be because it was compiled
+# as part of the same project using add_subdirectory
+#-----------------------------------------------------------------------------
+if(NOT TARGET cci)
+  include ("${CMAKE_CURRENT_LIST_DIR}/CCITargets.cmake")
+endif ()
+
+#-----------------------------------------------------------------------------
+# Libraries
+#-----------------------------------------------------------------------------
+set(CCI_LIBRARIES cci_api
+  @CCI_LIBS@
+)
+
+#-----------------------------------------------------------------------------
+# Include directories
+#-----------------------------------------------------------------------------
+set(CCI_INCLUDE_DIRS @CCI_INCLUDE_DIRS@)
+set(CCI_INCLUDE_DIR  @CCI_INCLUDE_DIRS@)
+set(CCI_FOUND 1)
